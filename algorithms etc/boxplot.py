@@ -24,7 +24,7 @@ def boxplot2(data,prop,p=0):
         plt.axvline(x = mean,color='purple', linestyle='--',label='armean')
     elif prop == 'quantil':
         L = statistics.quantiles(data,n=p)
-        plt.axhline(y=20,label='percentiles',color='red', linestyle='--')
+        plt.axhline(y=20,label='quantiles',color='red', linestyle='--')
         for i in range(p-1):
             plt.axvline(x = L[i],color='red', linestyle='--')
 
