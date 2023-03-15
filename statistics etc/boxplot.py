@@ -53,7 +53,7 @@ def boxplot2(data,prop,p=0):
         L = statistics.quantiles(data,n=p)
         plt.axhline(y=20,label='quantiles',color='red', linestyle='--')
         for i in range(p-1):
-            plt.axvline(x = L[i],color='red', linestyle='--')
+            plt.axvline(x = L[i],color='red', linestyle='--',zorder=0)
 
     
     plt.yticks(np.arange(0))
