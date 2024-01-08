@@ -7,8 +7,6 @@ from torch.utils.data import DataLoader #easier dataset management (mini-batches
 import matplotlib.pyplot as plt
 import numpy as np
 
-
-
 mnist_path = './data'
 
 train_dataset = datasets.MNIST(root=mnist_path, train=True, download=True)
