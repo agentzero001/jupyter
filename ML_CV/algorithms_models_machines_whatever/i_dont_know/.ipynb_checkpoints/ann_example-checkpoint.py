@@ -2,29 +2,42 @@ import numpy as np
 import matplotlib.pyplot as plt
 plt.rcParams['figure.facecolor'] = '0.2'
 plt.rcParams['axes.facecolor'] = 'black'
-
 weights = np.random.randn
 
+#hyperparameters
 obs = 15
-np.random.seed(15)
-data = np.random.randint(0,5, (obs,5))
-data_unique = np.unique(data, axis=0)
-xs = np.c_[np.ones(obs), data_unique] 
-
-ys = np.random.choice(list(range(1,10)), (obs, 1))
-
 ins = 5
 outs = 1
-lr = .0001
+lr = .000001
 
-w0 = weights(ins+1, 10)
-w1 = weights(10, 5) 
-w2 = weights(5, outs)
+#create labeled data
+# np.random.seed(16)
+# data = np.random.randint(0,5, (obs,ins))
+# data_unique = np.unique(data, axis=0)
+# xs = np.c_[np.ones(obs), data_unique] 
+# ys = np.random.choice(list(range(1,10)), (obs, 1))
+
+#create a linear problem
+# data = np.random.choice(np.linspace(-10,10,1000), (obs, 1))
+# data_unique = np.unique(data, axis=0)
+# ys = 3 * data_unique - 2
+# xs = np.c_[np.ones(obs), data_unique]
+
+#create non-linear problem
+data = np.random.choice(np.linspace(-10,10,1000), (obs, 1))
+data_unique = np.unique(data, axis=0)
+ys = data_unique**2
+xs = np.c_[np.ones(obs), data_unique]
+
+
+#define nn structure
+w0 = weights(xs.shape[1], 20)
+w1 = weights(20, 20) 
+w2 = weights(20, ys.shape[1])
+
+#train the model
 err = []
-
-#xs.shape, w0.shape, w1.shape, w2.shape, ys.shape
-
-for i in range(50000):
+for i in range(350000):
     x0 = xs
     
     #Forward Propagation
@@ -49,6 +62,11 @@ for i in range(50000):
         break
     err.append(e)
 
+#show the optimization curve
+plt.figure(1)
 plt.plot(err,color='red', linewidth=1)
 plt.title('yhat - ys')
-plt.show()
+
+plt.figure(2)
+plt.plot(ys,linewidth=10)
+plt.plot(yh)
