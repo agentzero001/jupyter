@@ -6,7 +6,7 @@ plt.rcParams['figure.facecolor'] = '0.2'
 plt.rcParams['axes.facecolor'] = 'black'
 
 #hyperparameters
-obs = 15
+obs = 30
 ins = 5
 outs = 1
 lr = .003

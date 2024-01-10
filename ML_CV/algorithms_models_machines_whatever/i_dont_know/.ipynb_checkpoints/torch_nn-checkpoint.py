@@ -6,7 +6,7 @@ plt.rcParams['figure.facecolor'] = '0.2'
 plt.rcParams['axes.facecolor'] = 'black'
 
 #hyperparameters
-obs = 15
+obs = 30
 ins = 5
 outs = 1
 lr = .003
@@ -42,7 +42,7 @@ for i in range(5000):
     yh = (x2 @ w2)    
     
     #Backward Propagation
-    loss  = F.mse_loss(yh, ys)
+    loss = F.mse_loss(yh, ys)
     optimizer.zero_grad()
     
     loss.backward()
