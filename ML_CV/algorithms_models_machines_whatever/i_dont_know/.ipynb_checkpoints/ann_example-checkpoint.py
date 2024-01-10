@@ -37,7 +37,7 @@ w2 = weights(20, ys.shape[1])
 
 #train the model
 err = []
-for i in range(350000):
+for i in range(150000):
     x0 = xs
     
     #Forward Propagation
