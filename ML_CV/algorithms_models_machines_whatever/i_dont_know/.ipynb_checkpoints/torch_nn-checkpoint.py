@@ -33,7 +33,7 @@ optimizer = torch.optim.Adam([w0, w1, w2], lr)
 
 #train the model
 err = []
-for i in range(5000):
+for i in range(500):
     x0 = xs
     
     #Forward Propagation
@@ -41,17 +41,15 @@ for i in range(5000):
     z1 = x1 @ w1; x2 = torch.sin(z1)
     yh = (x2 @ w2)    
     
-    #Backward Propagation
     loss = F.mse_loss(yh, ys)
     optimizer.zero_grad()
     
     loss.backward()
     optimizer.step()
     
-    
     e  = loss.item()
     
-    if i % 500 == 0:
+    if i % 50 == 0:
         print('loss', e)   
     err.append(e)
 
