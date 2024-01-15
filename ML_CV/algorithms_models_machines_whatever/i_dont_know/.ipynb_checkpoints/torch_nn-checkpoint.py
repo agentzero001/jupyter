@@ -20,7 +20,7 @@ def weights(ins,outs):
     return ws
 
 #create non-linear problem
-data = np.random.choice(torch.linspace(-20,20,1000), (obs, 1))
+data = np.random.choice(torch.linspace(-30,30,1000), (obs, 1))
 data_unique = np.unique(data, axis=0)
 ys = data_unique**2
 ys = torch.tensor(ys).float()
@@ -55,8 +55,8 @@ for i in range(20000):
     optimizer.step()
     
     e  = loss.item()
-    if i % 500 == 0:
-        print('loss', e)   
+    if i % 100 == 0:
+        print('iteration {}: loss {}'.format(i, e))  
     err.append(e)
 
 #show the optimization curve
@@ -67,6 +67,6 @@ plt.plot(err,color='red', linewidth=1)
 plt.title('yhat - ys')
 
 plt.subplot(122)
-plt.plot(ys,linewidth=10)
+plt.plot(ys, linewidth=10, c='grey')
 plt.plot(yh.detach().numpy())
 

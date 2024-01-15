@@ -11,7 +11,7 @@ ins = 5
 outs = 1
 lr = .003
 
-params = []
+
 #weights = lambda ins, outs: torch.randn(ins,outs).requires_grad_(True)
 
 def weights(ins,outs):
@@ -20,13 +20,20 @@ def weights(ins,outs):
     return ws
 
 #create non-linear problem
-data = np.random.choice(torch.linspace(-20,20,1000), (obs, 1))
+data = np.random.choice(torch.linspace(-30,30,1000), (obs, 1))
 data_unique = np.unique(data, axis=0)
 ys = data_unique**2
 ys = torch.tensor(ys).float()
 xs = np.c_[torch.ones(obs), data_unique]
 xs = torch.tensor(xs).float()
 
+
+params = []
+
+def weights(ins,outs):
+    ws = torch.randn(ins,outs).requires_grad_(True)
+    params.append(ws)
+    return ws
 
 class Model:
     def __init__(self):
@@ -43,7 +50,6 @@ class Model:
 model = Model()
 optimizer = torch.optim.Adam(params, lr)
 
-#train the model
 err = []
 for i in range(20000):
     
@@ -55,8 +61,8 @@ for i in range(20000):
     optimizer.step()
     
     e  = loss.item()
-    if i % 500 == 0:
-        print('loss', e)   
+    if i % 100 == 0:
+        print('iteration {}: loss {}'.format(i, e))  
     err.append(e)
 
 #show the optimization curve
@@ -67,6 +73,6 @@ plt.plot(err,color='red', linewidth=1)
 plt.title('yhat - ys')
 
 plt.subplot(122)
-plt.plot(ys,linewidth=10)
+plt.plot(ys, linewidth=10, c='grey')
 plt.plot(yh.detach().numpy())
 
