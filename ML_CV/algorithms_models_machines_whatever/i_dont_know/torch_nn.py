@@ -11,14 +11,6 @@ ins = 5
 outs = 1
 lr = .003
 
-
-#weights = lambda ins, outs: torch.randn(ins,outs).requires_grad_(True)
-
-def weights(ins,outs):
-    ws = torch.randn(ins,outs).requires_grad_(True)
-    params.append(ws)
-    return ws
-
 #create non-linear problem
 data = np.random.choice(torch.linspace(-30,30,1000), (obs, 1))
 data_unique = np.unique(data, axis=0)
