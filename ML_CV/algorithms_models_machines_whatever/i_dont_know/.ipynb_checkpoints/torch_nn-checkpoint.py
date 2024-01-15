@@ -11,7 +11,7 @@ ins = 5
 outs = 1
 lr = .003
 
-params = []
+
 #weights = lambda ins, outs: torch.randn(ins,outs).requires_grad_(True)
 
 def weights(ins,outs):
@@ -28,6 +28,13 @@ xs = np.c_[torch.ones(obs), data_unique]
 xs = torch.tensor(xs).float()
 
 
+params = []
+
+def weights(ins,outs):
+    ws = torch.randn(ins,outs).requires_grad_(True)
+    params.append(ws)
+    return ws
+
 class Model:
     def __init__(self):
         self.w0 = weights(xs.shape[1], 100)
@@ -43,7 +50,6 @@ class Model:
 model = Model()
 optimizer = torch.optim.Adam(params, lr)
 
-#train the model
 err = []
 for i in range(20000):
     
