@@ -3,7 +3,7 @@ import torch.nn.functional as F
 import torchvision.datasets as datasets
 import torchvision.transforms as transforms
 from torch import nn, optim, Tensor as t
-from torch.utils.data import DataLoader 
+from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -18,7 +18,7 @@ class NN(nn.Module):
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
         return x
-    
+
 # model = NN(784, 10)
 # x = torch.randn(64, 784)
 
@@ -40,7 +40,7 @@ train_dataset = datasets.MNIST(root=mnist_path, train=True, download=True, trans
 #train_loader = DataLoader()
 test_dataset = datasets.MNIST(root=mnist_path, train=False, download=True)
 
-    
+
 # img, label = train_dataset[0]
 # to_tensor = transforms.ToTensor()
 # tensor_img = to_tensor(img)
