@@ -37,7 +37,10 @@ num_epochs = 1
 
 mnist_path = './data'
 train_dataset = datasets.MNIST(root=mnist_path, train=True, download=True, transform=transforms.ToTensor())
+#train_loader = DataLoader()
 test_dataset = datasets.MNIST(root=mnist_path, train=False, download=True)
-img, label = train_dataset[0]
-to_tensor = transforms.ToTensor()
-tensor_img = to_tensor(img)
+
+    
+# img, label = train_dataset[0]
+# to_tensor = transforms.ToTensor()
+# tensor_img = to_tensor(img)

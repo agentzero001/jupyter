@@ -19,16 +19,28 @@ class NN(nn.Module):
         x = self.fc2(x)
         return x
     
-model = NN(784, 10)
-x = torch.randn(64, 784)
+# model = NN(784, 10)
+# x = torch.randn(64, 784)
 
-model.Forward(x)
+device = torch.device('cuda' if torch.cuda.is_availible() else 'cpu')
 
-        
 
-# mnist_path = './data'
-# train_dataset = datasets.MNIST(root=mnist_path, train=True, download=True)
-# test_dataset = datasets.MNIST(root=mnist_path, train=False, download=True)
+input_size = 784
+num_classes = 10
+learning_rate = .001
+batch_size = 64
+num_epochs = 1
+
+
+
+
+
+mnist_path = './data'
+train_dataset = datasets.MNIST(root=mnist_path, train=True, download=True, transform=transforms.ToTensor())
+#train_loader = DataLoader()
+test_dataset = datasets.MNIST(root=mnist_path, train=False, download=True)
+
+    
 # img, label = train_dataset[0]
 # to_tensor = transforms.ToTensor()
 # tensor_img = to_tensor(img)
