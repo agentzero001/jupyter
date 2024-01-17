@@ -3,7 +3,7 @@ import torch.nn.functional as F
 import torchvision.datasets as datasets
 import torchvision.transforms as transforms
 from torch import nn, optim, Tensor as t
-from torch.utils.data import DataLoader 
+from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -18,12 +18,11 @@ class NN(nn.Module):
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
         return x
-    
+
 # model = NN(784, 10)
 # x = torch.randn(64, 784)
 
-device = torch.device('cuda' if torch.cuda.is_availible() else 'cpu')
-
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 input_size = 784
 num_classes = 10
@@ -31,16 +30,20 @@ learning_rate = .001
 batch_size = 64
 num_epochs = 1
 
-
-
-
-
 mnist_path = './data'
 train_dataset = datasets.MNIST(root=mnist_path, train=True, download=True, transform=transforms.ToTensor())
-#train_loader = DataLoader()
 test_dataset = datasets.MNIST(root=mnist_path, train=False, download=True)
+train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
+test_loader =  DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
 
-    
-# img, label = train_dataset[0]
-# to_tensor = transforms.ToTensor()
-# tensor_img = to_tensor(img)
+model = NN(input_size, num_classes).to(device)
+
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+
+
+for epoch in range(num_epochs):
+    for batch_idx, (data, targets) in enumerate(train_loader):
+        data = data.to(device=device)
+        targets = targets.to(device=device)
+        
