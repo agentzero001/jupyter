@@ -47,3 +47,5 @@ for epoch in range(num_epochs):
         data = data.to(device=device)
         targets = targets.to(device=device)
         
+        
+        
