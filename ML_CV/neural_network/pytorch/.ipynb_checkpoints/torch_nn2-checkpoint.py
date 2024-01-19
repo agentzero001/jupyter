@@ -14,7 +14,7 @@ class NN(nn.Module):
         self.fc1 = nn.Linear(input_size, 50)
         self.fc2 = nn.Linear(50, num_classes)
         
-    def Forward(self, x):
+    def forward(self, x):
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
         return x
@@ -32,7 +32,7 @@ num_epochs = 1
 
 mnist_path = './data'
 train_dataset = datasets.MNIST(root=mnist_path, train=True, download=True, transform=transforms.ToTensor())
-test_dataset = datasets.MNIST(root=mnist_path, train=False, download=True)
+test_dataset = datasets.MNIST(root=mnist_path, train=False, download=True, transform=transforms.ToTensor())
 train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
 test_loader =  DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
 
@@ -47,3 +47,7 @@ for epoch in range(num_epochs):
         data = data.to(device=device)
         targets = targets.to(device=device)
         
+        data = data.reshape(data.shape[0], -1)
+        
+        scores = model(data)
+        loss = criterion(scores, targets)
