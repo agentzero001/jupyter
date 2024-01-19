@@ -51,3 +51,6 @@ for epoch in range(num_epochs):
         
         scores = model(data)
         loss = criterion(scores, targets)
+    
+        optimizer.zero_grad()
+        loss.backward()
