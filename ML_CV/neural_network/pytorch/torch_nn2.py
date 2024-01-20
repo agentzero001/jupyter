@@ -6,7 +6,7 @@ from torch import nn, optim, Tensor as t
 from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 import numpy as np
-
+ 
 
 class NN(nn.Module):
     def __init__(self, input_size, num_classes):
@@ -54,3 +54,24 @@ for epoch in range(num_epochs):
     
         optimizer.zero_grad()
         loss.backward()
+        
+        optimizer.step()
+        
+        
+def check_accuracy(loader, model):
+    num_correct = 0
+    num_samples = 0
+    model.eval()
+    
+    with torch.no_grad():
+        for x, y in loader:
+            x = x.to(device=device)
+            y = y.to(device=device)
+            x = x.reshape(data.shape[0], -1)
+            
+            scores = model(x)
+            _, predictions = scores.max(1)
+            num_correct += (predictions == y).sum()
+            num_samples += predictions.size(0)
+            
+            
