@@ -11,8 +11,8 @@ import numpy as np
 class NN(nn.Module):
     def __init__(self, input_size, num_classes):
         super(NN, self).__init__()
-        self.fc1 = nn.Linear(input_size, 50)
-        self.fc2 = nn.Linear(50, num_classes)
+        self.fc1 = nn.Linear(input_size, 200)
+        self.fc2 = nn.Linear(200, num_classes)
         
     def forward(self, x):
         x = F.relu(self.fc1(x))
