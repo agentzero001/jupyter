@@ -19,8 +19,8 @@ class NN(nn.Module):
         x = self.fc2(x)
         return x
 
-# model = NN(784, 10)
-# x = torch.randn(64, 784)
+    
+
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -31,10 +31,15 @@ batch_size = 64
 num_epochs = 1
 
 mnist_path = './data'
-train_dataset = datasets.MNIST(root=mnist_path, train=True, download=True, transform=transforms.ToTensor())
-test_dataset = datasets.MNIST(root=mnist_path, train=False, download=True, transform=transforms.ToTensor())
+train_dataset = datasets.MNIST(root=mnist_path, train=True, download=True,
+                               transform=transforms.ToTensor())
+
+test_dataset = datasets.MNIST(root=mnist_path, train=False, download=True, 
+                              transform=transforms.ToTensor())
+
 train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
 test_loader =  DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
+
 
 model = NN(input_size, num_classes).to(device)
 
