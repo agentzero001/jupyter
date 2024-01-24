@@ -18,10 +18,11 @@ class NN(nn.Module):
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
         return x
-
+    
     
 
 
+    
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 input_size = 784
@@ -78,8 +79,7 @@ def check_accuracy(loader, model):
             _, predictions = scores.max(1)
             num_correct += (predictions == y).sum()
             num_samples += predictions.size(0)
-                                            
-                                            
+            
     return num_samples, num_correct
             
             
