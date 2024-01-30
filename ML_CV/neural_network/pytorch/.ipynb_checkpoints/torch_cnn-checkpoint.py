@@ -34,7 +34,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 num_classes = 10
 learning_rate = .001
 batch_size = 64
-num_epochs = 1
+num_epochs = 5
 
 mnist_path = './data'
 train_dataset = datasets.MNIST(root=mnist_path, train=True, download=True,
