@@ -24,10 +24,8 @@ class CNN(nn.Module):
         x = self.pool(x)
         x = x.reshape(x.shape[0], -1)
         x = self.fc1(x)
-    
         return x
 
-    
     
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
