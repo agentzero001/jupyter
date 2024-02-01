@@ -16,7 +16,6 @@ class CNN(nn.Module):
         self.conv2 = nn.Conv2d(in_channels=8, out_channels=16, kernel_size=(3,3), stride=(1,1), padding=(1,1))
         self.fc1 = nn.Linear(16*7*7, num_classes)
                 
-        
     def forward(self, x):
         x = F.relu(self.conv1(x))
         x = self.pool(x)
@@ -25,7 +24,6 @@ class CNN(nn.Module):
         x = x.reshape(x.shape[0], -1)
         x = self.fc1(x)
         return x
-
     
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -82,5 +80,3 @@ def check_accuracy(loader, model):
             num_samples += predictions.size(0)
             
     return num_samples, num_correct
-            
-            
