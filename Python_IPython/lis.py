@@ -7,6 +7,7 @@ import operator as op
 from collections import ChainMap
 from itertools import chain
 from typing import Any, TypeAlias, NoReturn
+import builtins
 
 Symbol: TypeAlias = str
 Atom: TypeAlias = float | int | Symbol
