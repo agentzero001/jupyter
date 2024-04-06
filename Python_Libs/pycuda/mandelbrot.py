@@ -78,20 +78,27 @@ def gpu_mandelbrot(width, height, real_low, real_high, imag_low, imag_high, max_
     return mandelbrot_graph
 
 
-if __name__ == '__main__':
-    
+
+def time_(mandel_func, arguments):
     t1 = time()
-    mandel = simple_mandelbrot(512, 512, -2, 2, -2, 2, 256, 2.5)
+    mandel = mandel_func(*arguments)
     t2 = time()
     mandel_time = t2 - t1
-    
-    t1 = time()
-    fig = plt.figure(1)
-    plt.imshow(mandel, extent=(-2, 2, -2, 2))
-    plt.savefig(os.path.join(script_dir, 'mandelbrot.png'), dpi=fig.dpi)
-    t2 = time()
-    
-    dump_time = t2 - t1
-    
-    print(mandel_time, dump_time)
-    
+    return mandel_time
+
+arguments = [512, 512, -2, 2, -2, 2, 2048, 2.5]
+
+# t1 = time()
+# mandel = gpu_mandelbrot(512, 512, -2, 2, -2, 2, 256, 2.5)
+# t2 = time()
+# mandel_time = t2 - t1
+
+# t1 = time()
+# fig = plt.figure(1)
+# plt.imshow(mandel, extent=(-2, 2, -2, 2))
+# plt.savefig(os.path.join(script_dir, 'mandelbrot.png'), dpi=fig.dpi)
+# t2 = time()
+
+# dump_time = t2 - t1
+
+print(time_(gpu_mandelbrot, arguments))
