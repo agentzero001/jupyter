@@ -12,6 +12,8 @@ void matrix_vector_product(float *A, float *v_in, float *v_out, int n)
     }
 }
 
+
+
 int main(int argc, char **argv){
 
     float *A, *v_in, *v_out;
