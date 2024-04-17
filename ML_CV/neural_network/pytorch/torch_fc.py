@@ -77,6 +77,4 @@ def check_accuracy(loader, model):
             num_correct += (predictions == y).sum()
             num_samples += predictions.size(0)
             
-    return num_samples, num_correct
-            
-            
+    return num_samples, num_correct      
