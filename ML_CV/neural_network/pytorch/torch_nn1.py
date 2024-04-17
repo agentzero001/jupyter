@@ -32,8 +32,8 @@ xs = torch.tensor(xs).float()
 class Model:
     def __init__(self):
         self.w0 = weights(xs.shape[1], 100)
-        self.w1 = weights(100, 100) 
-        self.w2 = weights(100, ys.shape[1])
+        self.w1 = weights(100, 50) 
+        self.w2 = weights(50, ys.shape[1])
         
     def forward(self, x):
         x = torch.sin(x @ self.w0)
@@ -72,3 +72,4 @@ plt.plot(yh.detach().numpy(), linewidth=3, label='yh', color='green')
 legend = plt.legend()
 legend.get_texts()[0].set_color('white') 
 legend.get_texts()[1].set_color('white')
+plt.show()
