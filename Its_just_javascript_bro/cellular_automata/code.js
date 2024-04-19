@@ -21,7 +21,6 @@ function setRow() {
 }
 
 
-
 function update() {
     var left, right;
 
@@ -54,20 +53,18 @@ function clear() {
 
 function init () {
     char = document.createTextNode('click the cells to set initial state');
-    document.body.appendChild(char)
 
+    document.body.appendChild(char)
     document.body.appendChild(button)
     document.body.appendChild(button2)
 
-    row = document.getElementById('cells')
-    
+    row = document.getElementById('cells')  
     for (let i = 0; i < n; i++)
-    row.appendChild(document.createElement('td'))
+        row.appendChild(document.createElement('td'))
 
     cells = row.getElementsByTagName('td')
-    
     for (let i = 0; i < n; i++)
-    cells[i].addEventListener('click', set_state(i));
+        cells[i].addEventListener('click', set_state(i));
 
     button.addEventListener('click', run)
     button2.addEventListener('click', clear)
