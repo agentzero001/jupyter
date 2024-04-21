@@ -7,7 +7,7 @@ button.id = 'button1'
 button2 = document.createElement('button')
 button2.textContent = 'clear'
 
-set_state = function(i){
+set_state = function(i) {
     return function() {
         data[i] = true;
         setRow();
@@ -31,10 +31,10 @@ function update() {
     }
 }
 
-function run(){
+function run() {
     if (button.textContent === 'Start') { //gotta be extra-sure these are equal at runtime
         button.textContent = 'Stop';
-        interval_ID = setInterval(function(){ setRow(), update() }, 200);
+        interval_ID = setInterval(function() { setRow(), update() }, 200);
     }
     else {
         button.textContent = 'Start';
@@ -58,13 +58,12 @@ function init () {
     document.body.appendChild(button)
     document.body.appendChild(button2)
 
-    row = document.getElementById('cells')  
-    for (let i = 0; i < n; i++)
+    row = document.getElementById('cells') 
+    cells = row.getElementsByTagName('td') 
+    for (let i = 0; i < n; i++) {
         row.appendChild(document.createElement('td'))
-
-    cells = row.getElementsByTagName('td')
-    for (let i = 0; i < n; i++)
         cells[i].addEventListener('click', set_state(i));
+    }
 
     button.addEventListener('click', run)
     button2.addEventListener('click', clear)
