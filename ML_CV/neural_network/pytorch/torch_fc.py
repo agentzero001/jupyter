@@ -6,6 +6,7 @@ from torch import nn, optim, Tensor as t
 from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 import numpy as np
+from tqdm import tqdm
  
 
 class NN(nn.Module):
@@ -44,37 +45,37 @@ model = NN(input_size, num_classes).to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
-
-for epoch in range(num_epochs):
-    for batch_idx, (data, targets) in enumerate(train_loader):
-        data = data.to(device=device)
-        targets = targets.to(device=device)
-        
-        data = data.reshape(data.shape[0], -1)
-        
-        scores = model(data)
-        loss = criterion(scores, targets)
-    
-        optimizer.zero_grad()
-        loss.backward()
-        
-        optimizer.step()
-        
-        
 def check_accuracy(loader, model):
     num_correct = 0
     num_samples = 0
     model.eval()
-    
+
     with torch.no_grad():
         for x, y in loader:
             x = x.to(device=device)
             y = y.to(device=device)
             x = x.reshape(x.shape[0], -1)
-            
+
             scores = model(x)
             _, predictions = scores.max(1)
             num_correct += (predictions == y).sum()
             num_samples += predictions.size(0)
-            
-    return num_samples, num_correct      
+
+    return num_samples, num_correct   
+
+
+def main():
+    for epoch in range(num_epochs):    
+        for batch_idx, (data, targets) in enumerate(train_loader):
+            data = data.to(device=device)
+            targets = targets.to(device=device)
+
+            data = data.reshape(data.shape[0], -1)
+
+            scores = model(data)
+            loss = criterion(scores, targets)
+
+            optimizer.zero_grad()
+            loss.backward()
+
+            optimizer.step()

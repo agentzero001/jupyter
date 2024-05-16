@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import torch
 from torch.nn import functional as F
+
 plt.rcParams['figure.facecolor'] = '.0'
 plt.rcParams['axes.facecolor'] = '.1'
 plt.rcParams['axes.labelcolor'] = 'white'
@@ -24,6 +25,7 @@ def weights(ins,outs):
 
 data = np.random.choice(torch.linspace(-30,30,1000), (obs, 1))
 data_unique = np.unique(data, axis=0)
+obs = data_unique.shape[0]
 ys = data_unique**2
 ys = torch.tensor(ys).float()
 xs = np.c_[torch.ones(obs), data_unique]
@@ -58,6 +60,7 @@ for i in range(10000):
     if i % 1000 == 0:
         print('iteration {}: loss {}'.format(i, e))  
     err.append(e)
+    
 
 #show the optimization curve
 plt.figure()
