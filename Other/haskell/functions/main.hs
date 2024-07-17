@@ -19,4 +19,6 @@ cosSq''' = square . cos
 f :: Double -> Double
 f x = sqrt (x + 1)
 
+stepFunction :: Double -> Double
+stepFunction x = if x <= 0 then 0 else 1
 

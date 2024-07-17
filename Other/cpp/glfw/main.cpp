@@ -11,10 +11,17 @@ GLuint vao[numVAOs];
 
 
 GLuint createShaderProgram() {
+
+    //the primary purpose of any vertex shader is to send a vertex down the pipeline
+    //the vertices move through the pipeline to the rasterizer,
+    //where they are transformed into pixel locations (or fragments)
     const char *vshaderSource = 
         "#version 430 \n"
         "void main(void) \n"
         "{gl_Position = vec4(0.0, 0.0, 0.0, 1.0);}";
+
+    //Eventually these pixels (fragments) reach the fragment shader.
+    //The purpose of any fragment shader is to set the RGB (RGBa) color of a pixel to be displayed.
     const char *fshaderSource = 
         "#version 430 \n"
         "out vec4 color; \n"
@@ -24,7 +31,6 @@ GLuint createShaderProgram() {
     //create empty shaders
     GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
     GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
-
 
     //loads the GLSL code from the strings into the empty shader objects
     glShaderSource(vShader, 1, &vshaderSource, NULL);
@@ -43,6 +49,8 @@ GLuint createShaderProgram() {
 
 void init(GLFWwindow* window) {
     renderingProgram = createShaderProgram();
+    //When sets of data are prepared for sending down the pipeline, they are organized into buffers.
+    //Those buffers are in turn organized into Vertex Array Objects.
     glGenVertexArrays(numVAOs, vao);
     glBindVertexArray(vao[0]);
 
@@ -50,6 +58,8 @@ void init(GLFWwindow* window) {
 
 void display(GLFWwindow* window, double currentTime) {
     glUseProgram(renderingProgram);
+    glPointSize(30.0f);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glDrawArrays(GL_POINTS, 0, 1);
 }
 
