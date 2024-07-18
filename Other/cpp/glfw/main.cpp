@@ -1,6 +1,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "module.h"
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -11,38 +14,50 @@ GLuint vao[numVAOs];
 
 
 GLuint createShaderProgram() {
-
-    //the primary purpose of any vertex shader is to send a vertex down the pipeline
-    //the vertices move through the pipeline to the rasterizer,
-    //where they are transformed into pixel locations (or fragments)
-    const char *vshaderSource = 
-        "#version 430 \n"
-        "void main(void) \n"
-        "{gl_Position = vec4(0.0, 0.0, 0.0, 1.0);}";
-
-    //Eventually these pixels (fragments) reach the fragment shader.
-    //The purpose of any fragment shader is to set the RGB (RGBa) color of a pixel to be displayed.
-    const char *fshaderSource = 
-        "#version 430 \n"
-        "out vec4 color; \n"
-        "void main (void) \n"
-        "{color = vec4(0.0, 0.0, 1.0, 1.0);}";
+    GLint vertCompiled;
+    GLint fragCompiled;
+    GLint linked; 
 
     //create empty shaders
     GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
     GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-    //loads the GLSL code from the strings into the empty shader objects
-    glShaderSource(vShader, 1, &vshaderSource, NULL);
-    glShaderSource(fShader, 1, &fshaderSource, NULL);
+    string vertShaderStr = readShaderSource("shaders/default.vert");
+    string fragShaderStr = readShaderSource("shaders/default.frag");
+
+    const char *vertShaderSrc = vertShaderStr.c_str();
+    const char *fragShaderSrc = fragShaderStr.c_str();
+
+    // //loads the GLSL code from the strings into the empty shader objects
+    glShaderSource(vShader, 1, &vertShaderSrc, NULL);
+    glShaderSource(fShader, 1, &fragShaderSrc, NULL);
+
 
     glCompileShader(vShader);
-    glCompileShader(fShader);
+    CheckOpenGLError();
+    glGetShaderiv(vShader, GL_COMPILE_STATUS, &vertCompiled);
+    if (vertCompiled != 1) {
+        cout << "vertex compilation failed" << endl;
+        printShaderLog(vShader);
+    }
 
+    glCompileShader(fShader);
+    CheckOpenGLError();
+    glGetShaderiv(fShader, GL_COMPILE_STATUS, &fragCompiled);
+    if (fragCompiled != 1) {
+        cout << "fragment compilation failed" << endl;
+        printShaderLog(fShader);
+    }
+    
     GLuint vfProgram = glCreateProgram();
     glAttachShader(vfProgram, vShader);
     glAttachShader(vfProgram, fShader);
     glLinkProgram(vfProgram);
+    glGetProgramiv(vfProgram, GL_LINK_STATUS, &linked);
+    if (linked != 1) {
+        cout << "linking failed" << endl;
+        printProgramLog(vfProgram);
+    }
 
     return vfProgram;
 }
@@ -82,4 +97,5 @@ int main(void) {
     glfwDestroyWindow(window);
     glfwTerminate();
     exit(EXIT_SUCCESS);
+
 }
