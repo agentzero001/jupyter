@@ -5,10 +5,8 @@
             "label": "C/C++: gcc.exe build active file",
             "command": "C:\\msys64\\ucrt64\\bin\\gcc.exe",
             "args": [
-                "-fdiagnostics-color=always",
-                "-g",
-                "${fileDirname}\\module.cpp",
                 "${file}",
+                "${fileDirname}\\module.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe", 
                 "-lglfw3",

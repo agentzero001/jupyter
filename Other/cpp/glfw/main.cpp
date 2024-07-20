@@ -13,57 +13,8 @@ GLuint renderingProgram;
 GLuint vao[numVAOs];
 
 
-GLuint createShaderProgram() {
-    GLint vertCompiled;
-    GLint fragCompiled;
-    GLint linked; 
-
-    //create empty shaders
-    GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
-    GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
-
-    string vertShaderStr = readShaderSource("shaders/default.vert");
-    string fragShaderStr = readShaderSource("shaders/default.frag");
-
-    const char *vertShaderSrc = vertShaderStr.c_str();
-    const char *fragShaderSrc = fragShaderStr.c_str();
-
-    // //loads the GLSL code from the strings into the empty shader objects
-    glShaderSource(vShader, 1, &vertShaderSrc, NULL);
-    glShaderSource(fShader, 1, &fragShaderSrc, NULL);
-
-
-    glCompileShader(vShader);
-    CheckOpenGLError();
-    glGetShaderiv(vShader, GL_COMPILE_STATUS, &vertCompiled);
-    if (vertCompiled != 1) {
-        cout << "vertex compilation failed" << endl;
-        printShaderLog(vShader);
-    }
-
-    glCompileShader(fShader);
-    CheckOpenGLError();
-    glGetShaderiv(fShader, GL_COMPILE_STATUS, &fragCompiled);
-    if (fragCompiled != 1) {
-        cout << "fragment compilation failed" << endl;
-        printShaderLog(fShader);
-    }
-    
-    GLuint vfProgram = glCreateProgram();
-    glAttachShader(vfProgram, vShader);
-    glAttachShader(vfProgram, fShader);
-    glLinkProgram(vfProgram);
-    glGetProgramiv(vfProgram, GL_LINK_STATUS, &linked);
-    if (linked != 1) {
-        cout << "linking failed" << endl;
-        printProgramLog(vfProgram);
-    }
-
-    return vfProgram;
-}
-
 void init(GLFWwindow* window) {
-    renderingProgram = createShaderProgram();
+    renderingProgram = createShaderProgram("shaders/default.vert", "shaders/default.frag");
     //When sets of data are prepared for sending down the pipeline, they are organized into buffers.
     //Those buffers are in turn organized into Vertex Array Objects.
     glGenVertexArrays(numVAOs, vao);
@@ -71,11 +22,33 @@ void init(GLFWwindow* window) {
 
 }
 
+float x = 0.0f;
+float y = 0.0f;
+float inc = 0.01f;
+
 void display(GLFWwindow* window, double currentTime) {
+    glClearColor(0.0, 0.0, 0.0, 1.0);
+    
+    //need to init these each frame.
+    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+    //glClear(GL_COLOR_BUFFER_BIT);
     glUseProgram(renderingProgram);
-    glPointSize(30.0f);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glDrawArrays(GL_POINTS, 0, 1);
+    
+    x += inc;
+    y += inc;
+    if (x > 1.0f) inc = -0.0001f;
+    if (x < -1.0f) inc =  0.0001f;
+   
+    
+    GLuint offsetLoc = glGetUniformLocation(renderingProgram, "offset");
+    GLuint offsetLoc2 = glGetUniformLocation(renderingProgram, "offset2");
+    glProgramUniform1f(renderingProgram, offsetLoc, x);
+    glProgramUniform1f(renderingProgram, offsetLoc2, y);
+    
+    //glLineWidth(30.0f);
+    //glPointSize(30.0f);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 int main(void) {
