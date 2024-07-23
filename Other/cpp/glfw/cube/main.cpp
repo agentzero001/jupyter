@@ -19,7 +19,6 @@ void init(GLFWwindow* window) {
     //Those buffers are in turn organized into Vertex Array Objects.
     glGenVertexArrays(numVAOs, vao);
     glBindVertexArray(vao[0]);
-
 }
 
 float x = 0.0f;
@@ -36,8 +35,8 @@ void display(GLFWwindow* window, double currentTime) {
     
     x += inc;
     y += inc;
-    if (x > 1.0f) inc = -0.0001f;
-    if (x < -1.0f) inc =  0.0001f;
+    if (x > 0.5f) inc = -0.00005f;
+    if (x < 0.0f) inc =  0.00005f;
    
     
     GLuint offsetLoc = glGetUniformLocation(renderingProgram, "offset");
