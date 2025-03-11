@@ -1,1 +1,1 @@
-it is really a bunch of garbage which i made in order to get myself familiar with basic programming and scientific computing
+it is basically a bunch of garbage which i wrote in order to get myself familiar with basic programming and scientific computing
